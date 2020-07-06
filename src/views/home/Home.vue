@@ -1,7 +1,7 @@
 <template>
 	<div id="home">
 		<Header></Header>
-		<Sowing></Sowing>
+		<Sowing :sowing_list="sowing_list"></Sowing>
 	</div>
 </template>
 
@@ -13,10 +13,19 @@
 	import Sowing from './components/sowing/Sowing'
 	export default{
 		name:"Home",
+		data(){
+			return {
+				// 首页轮播数据
+				sowing_list:[],
+			}
+		},
 		created(){
 			// 2.请求网络数据
 			getHomeData().then((response)=>{
 				console.log(response);
+				if(response.success){
+					this.sowing_list = response.data.list[0].icon_list;
+				}
 			}).catch(error=>{
 				// todo...
 				console.log(error);

@@ -1,9 +1,13 @@
 <template>
 	 <swiper :options="swiperOption" ref="mySwiper" id="swiper">
 	    <!-- slides -->
-	    <swiper-slide v-for="(sowing,index) in sowing_list" :key="sowing.public_id">
-			<img :src="sowing.icon_url" :alt="sowing.public_name">
-		</swiper-slide>
+	    <swiper-slide>I'm Slide 1</swiper-slide>
+	    <swiper-slide>I'm Slide 2</swiper-slide>
+	    <swiper-slide>I'm Slide 3</swiper-slide>
+	    <swiper-slide>I'm Slide 4</swiper-slide>
+	    <swiper-slide>I'm Slide 5</swiper-slide>
+	    <swiper-slide>I'm Slide 6</swiper-slide>
+	    <swiper-slide>I'm Slide 7</swiper-slide>
 	    <!-- Optional controls -->
 	    <div class="swiper-pagination"  slot="pagination"></div>
 	  </swiper>
@@ -41,16 +45,13 @@
 				},
 			}
 		},
-		props:{
-			sowing_list:Array
-		},
 		computed:{
 			swiper(){
 				return this.$refs.mySwiper.swiper;
 			}
 		},
 		mounted(){
-			// this.swiper.slideTo(5,1000,false);
+			this.swiper.slideTo(5,1000,false);
 		},
 		components:{
 			swiper,
@@ -62,12 +63,7 @@
 <style>
 	#swiper{
 		width:100%;
-		height:15rem;
+		height:10rem;
 		background-color:red;
-	}
-	#swiper img{
-		width:100%;
-		height:100%;
-		
 	}
 </style>
