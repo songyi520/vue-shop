@@ -1,7 +1,13 @@
 <template>
 	<div id="home">
-		<Header></Header>
-		<Sowing :sowing_list="sowing_list"></Sowing>
+		<div v-if="!showLoading">
+			<Header></Header>
+			<!-- 轮播图 -->
+			<Sowing :sowing_list="sowing_list"></Sowing>
+			<!-- 中间nva部分 -->
+			<Nav :nav_list="nav_list"></Nav>
+		</div>
+		<van-loading type="spinner" color="#75a342" id="loading" v-else>小笨正在拼命加载中。。。</van-loading>
 	</div>
 </template>
 
@@ -11,12 +17,17 @@
 	//2 引入组件
 	import Header from './components/header/Header'
 	import Sowing from './components/sowing/Sowing'
+	import Nav from './components/nav/Nav'
 	export default{
 		name:"Home",
 		data(){
 			return {
 				// 首页轮播数据
 				sowing_list:[],
+				//中间nav数据
+				nav_list:[],
+				//是否显示加载图标
+				showLoading:true,
 			}
 		},
 		created(){
@@ -25,6 +36,10 @@
 				console.log(response);
 				if(response.success){
 					this.sowing_list = response.data.list[0].icon_list;
+					this.nav_list = response.data.list[2].icon_list;
+					
+					//隐藏加载动画
+					this.showLoading = false;
 				}
 			}).catch(error=>{
 				// todo...
@@ -34,6 +49,7 @@
 		components:{
 			Header,
 			Sowing,
+			Nav,
 		}
 	}
 </script>
@@ -42,6 +58,12 @@
 	#home{
 		width:100%;
 		height:100%;
-		background-color: skyblue;
+		background-color: transparent;
+	}
+	#loading{
+		position: absolute;
+		left:50%;
+		top:40%;
+		transform:translate(-50%);
 	}
 </style>

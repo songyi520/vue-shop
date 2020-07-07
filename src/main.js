@@ -18,9 +18,9 @@ import '@/style/common.less'
 
 //3 引入全局UI组件库-vant
 import '@/plugins/vant'
-//轮播插件
-// import 'swiper/swiper-bundle.css'
-// import VueAwesomeSwiper from 'vue-awesome-swiper'
+
+//4. 引入rem配置
+import '@/config/rem.js'
 
 
 new Vue({

@@ -70,4 +70,8 @@
 		height:100%;
 		
 	}
+	/* 穿透修改样式 */
+	#swiper >>> .swiper-pagination-bullet-active{
+		background-color:limegreen ;
+	}
 </style>
