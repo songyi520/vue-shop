@@ -2,12 +2,19 @@
 	<div id="home">
 		<div v-if="!showLoading">
 			<Header></Header>
-			<!-- 轮播图 -->
+			<!--轮播图-->
 			<Sowing :sowing_list="sowing_list"></Sowing>
-			<!-- 中间nva部分 -->
+			<!-- 中间导航 -->
 			<Nav :nav_list="nav_list"></Nav>
 		</div>
-		<van-loading type="spinner" color="#75a342" id="loading" v-else>小笨正在拼命加载中。。。</van-loading>
+			<van-loading
+			        v-else
+			        type="spinner"
+			        color="#75a342"
+			        style="position: absolute;left:50%;top: 40%;transform: translate(-50%)"
+			>
+			    正在拼命加载中…
+			</van-loading>
 	</div>
 </template>
 
@@ -59,11 +66,5 @@
 		width:100%;
 		height:100%;
 		background-color: transparent;
-	}
-	#loading{
-		position: absolute;
-		left:50%;
-		top:40%;
-		transform:translate(-50%);
 	}
 </style>
