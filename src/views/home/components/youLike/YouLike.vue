@@ -21,7 +21,7 @@
 		props:{
 			you_like_product_list:Array || []
 		},
-		componets:{
+		components:{
 			YouLikeItem,
 		},
 	}

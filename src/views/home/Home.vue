@@ -10,6 +10,8 @@
 			<FlashSale :flash_sale_product_list="flash_sale_product_list"></FlashSale>
 			<!-- 猜你喜欢的 -->
 			<YouLike :you_like_product_list="you_like_product_list"></YouLike>
+			<!-- 返回顶部 -->
+			<MarkPage v-if="showBackStatus" :scrollToTop="scrollToTop"></MarkPage>
 		</div>
 			<van-loading
 			        v-else
@@ -31,6 +33,9 @@
 	import Nav from './components/nav/Nav'
 	import FlashSale from './components/flashSale/FlashSale'
 	import YouLike from './components/youLike/YouLike'
+	import MarkPage from './components/markPage/MarkPage'
+	//3 引入处理顶部的函数
+	import {showBack,animate} from "@/config/global";
 	export default{
 		name:"Home",
 		data(){
@@ -45,24 +50,34 @@
 				you_like_product_list:[],
 				//是否显示加载图标
 				showLoading:true,
+				//是否显示返回顶部的按钮
+				showBackStatus:false,
 			}
 		},
 		created(){
 			// 2.请求网络数据
-			getHomeData().then((response)=>{
-				console.log(response);
-				if(response.success){
-					this.sowing_list = response.data.list[0].icon_list;
-					this.nav_list = response.data.list[2].icon_list;
-					this.flash_sale_product_list = response.data.list[3].product_list;
-					this.you_like_product_list = response.data.list[12].product_list;
-					//隐藏加载动画
-					this.showLoading = false;
-				}
-			}).catch(error=>{
-				// todo...
-				console.log(error);
-			})
+			this.reqData();
+			
+			// getHomeData().then((response)=>{
+			// 	console.log(response);
+			// 	if(response.success){
+			// 		this.sowing_list = response.data.list[0].icon_list;
+			// 		this.nav_list = response.data.list[2].icon_list;
+			// 		this.flash_sale_product_list = response.data.list[3].product_list;
+			// 		this.you_like_product_list = response.data.list[12].product_list;
+			// 		//隐藏加载动画
+			// 		this.showLoading = false;
+					
+			// 		//开始监听滚动，到达一定位置就显示返回顶部按钮
+			// 		showBack((status)=>{
+			// 			console.log(status);
+			// 			this.showBackStatus = status;
+			// 		});
+			// 	}
+			// }).catch(error=>{
+			// 	// todo...
+			// 	console.log(error);
+			// });
 		},
 		components:{
 			Header,
@@ -70,7 +85,33 @@
 			Nav,
 			FlashSale,
 			YouLike,
-		}
+			MarkPage,
+		},
+		methods:{
+			async reqData(){
+				let res = await getHomeData();
+				// console.log(res);
+				if(res.success){
+					this.sowing_list = res.data.list[0].icon_list;
+					this.nav_list = res.data.list[2].icon_list;
+					this.flash_sale_product_list = res.data.list[3].product_list;
+					this.you_like_product_list = res.data.list[12].product_list;
+					
+					//隐藏加载动画
+					this.showLoading = false;
+					//开始监听滚动，到达一定位置就显示返回顶部按钮
+					showBack((status)=>{
+						// console.log(status);
+						this.showBackStatus = status;
+					});
+				}
+			},
+			scrollToTop(){
+				//做缓动动画返回顶部
+				let docB = document.documentElement || document.body;
+				animate(docB,{scrollTop:'0'},400,'ease-out');
+			},
+		},
 	}
 </script>
 

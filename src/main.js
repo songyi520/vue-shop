@@ -2,9 +2,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index'
 
-
-
-
 //1 引入 fastclick
 import FastClick from 'fastclick'
 if ('addEventListener' in document) {
@@ -22,6 +19,8 @@ import '@/plugins/vant'
 //4. 引入rem配置
 import '@/config/rem.js'
 
+//5. 引入全局过滤器
+import '@/config/filters'
 
 new Vue({
 	router,
