@@ -31,7 +31,7 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped="scoped">
 	.wrapper {
 	    position: fixed;
 	    left: 0;
