@@ -30,8 +30,7 @@
     .itemWrapper {
         display: inline-block;
         padding-top: 0.3125rem;
-        width: 20%; 
-	}
+        width: 20%; }
 
     .imageWrapper {
         padding-bottom: 58.823%;

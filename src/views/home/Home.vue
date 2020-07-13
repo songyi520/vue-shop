@@ -57,27 +57,7 @@
 		created(){
 			// 2.请求网络数据
 			this.reqData();
-			
-			// getHomeData().then((response)=>{
-			// 	console.log(response);
-			// 	if(response.success){
-			// 		this.sowing_list = response.data.list[0].icon_list;
-			// 		this.nav_list = response.data.list[2].icon_list;
-			// 		this.flash_sale_product_list = response.data.list[3].product_list;
-			// 		this.you_like_product_list = response.data.list[12].product_list;
-			// 		//隐藏加载动画
-			// 		this.showLoading = false;
-					
-			// 		//开始监听滚动，到达一定位置就显示返回顶部按钮
-			// 		showBack((status)=>{
-			// 			console.log(status);
-			// 			this.showBackStatus = status;
-			// 		});
-			// 	}
-			// }).catch(error=>{
-			// 	// todo...
-			// 	console.log(error);
-			// });
+		
 		},
 		components:{
 			Header,
