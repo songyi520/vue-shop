@@ -50,12 +50,18 @@
 </template>
 
 <script>
+	import PubSub from 'pubsub-js'
+	
 	export default{
 		name:"YouLikeItem",
 		props:{
 			product:Object
 		},
-	
+		methods:{
+			addToCart(goods){
+				PubSub.publish('homeAddToCart',goods);
+			}
+		}
 	}
 	
 </script>
