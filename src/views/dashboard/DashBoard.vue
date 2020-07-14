@@ -38,7 +38,7 @@
 		name:"DashBoard",
 		 data() {
 		    return {
-		      active: 0,
+		      active: Number(sessionStorage.getItem('tabBarActiveIndex')),
 		      home_icon: {
 		        inactive: require('@/images/tabbar/home_default.png'),
 		        active: require('@/images/tabbar/home_selected.png'),
@@ -57,6 +57,14 @@
 			  },
 		    };
 		  },
+		  watch:{
+			  active(value){
+				  // console.log(value);
+				  let tabBarActiveIndex = value > 0 ? value:0;
+				  //缓存到本地
+				  sessionStorage.setItem('tabBarActiveIndex',value);
+			  }
+		  }
 	}
 </script>
 
