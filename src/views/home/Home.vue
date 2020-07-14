@@ -36,6 +36,11 @@
 	import MarkPage from './components/markPage/MarkPage'
 	//3 引入处理顶部的函数
 	import {showBack,animate} from "@/config/global";
+	//4 引入通知插件
+	import PubSub from 'pubsub-js';
+	//5 引入vuex
+	import {mapMutations} from 'vuex'
+	
 	export default{
 		name:"Home",
 		data(){
@@ -59,6 +64,19 @@
 			this.reqData();
 		
 		},
+		mounted(){
+			//订阅消息（添加到购物车的消息）
+			PubSub.subscribe('homeAddToCart',(msg,goods)=>{
+				if(msg === 'homeAddToCart'){
+					this.ADD_GOODS({
+						goodsId:goods.id,
+						goodsName:goods.name,
+						smallImage:goods.small_image,
+						goodsPrice:goods.price,
+					});
+				}
+			});
+		},
 		components:{
 			Header,
 			Sowing,
@@ -68,6 +86,7 @@
 			MarkPage,
 		},
 		methods:{
+			...mapMutations(["ADD_GOODS"]),
 			async reqData(){
 				let res = await getHomeData();
 				// console.log(res);
