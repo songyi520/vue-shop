@@ -7,6 +7,10 @@ Vue.use(Tabbar).use(TabbarItem);
 import {Loading} from 'vant'
 Vue.use(Loading);
 
-//图片懒加载
+//3 图片懒加载
 import {Image} from 'vant';
 Vue.use(Image);
+
+//4 提示
+import {Toast} from 'vant';
+Vue.use(Toast);
