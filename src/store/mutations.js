@@ -1,12 +1,13 @@
 import {ADD_GOODS} from './mutations-type'
+import Vue from 'vue'
 export default {
 	//1 往购物车中添加数据
-	[ADD_GOODS](state,{goodsId,goodsName,smallImage,goodsPrice}){
+	[ADD_GOODS](state, {goodsId, goodsName, smallImage, goodsPrice}){
 		let shopCart = state.shopCart;
 		// 1.1 判断商品是否存在
 		if(shopCart[goodsId]){
 			//存在
-			shopCart['goodsId']['num']++;
+			shopCart[goodsId]['num']++;
 		}else{
 			//不存在
 			shopCart[goodsId] = {
@@ -22,3 +23,4 @@ export default {
 		state.shopCart = {...shopCart};
 	}
 }
+ 

@@ -38,6 +38,7 @@
 	import {showBack,animate} from "@/config/global";
 	//4 引入通知插件
 	import PubSub from 'pubsub-js';
+	import {Toast} from 'vant';
 	//5 引入vuex
 	import {mapMutations} from 'vuex'
 	
@@ -73,6 +74,11 @@
 						goodsName:goods.name,
 						smallImage:goods.small_image,
 						goodsPrice:goods.price,
+					});
+					//提示用户
+					Toast({
+						message:'添加到购物车成功！',
+						duration:800
 					});
 				}
 			});
