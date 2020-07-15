@@ -208,6 +208,9 @@
 
     export default {
         name: "Cart",
+		computed:{
+			...mapState(["shopCart"]), 
+		}
     }
 </script>
 
