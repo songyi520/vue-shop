@@ -13,7 +13,7 @@
 		      <img :src="props.active ? category_icon.active : category_icon.inactive" />
 		    </template>
 		  </van-tabbar-item>
-		  <van-tabbar-item replace to="/dashboard/cart" info="">
+		  <van-tabbar-item replace to="/dashboard/cart" :info="goodsNum > 0 ? goodsNum : '' ">
 		    <span>购物车</span>
 		    <template #icon="props">
 		      <img :src="props.active ? cart_icon.active : cart_icon.inactive" />
@@ -71,7 +71,13 @@
 			...mapState(['shopCart']),
 			goodsNum(){
 				if(this.shopCart){
-					
+					//总部购物车商品数量
+					let num = 0;
+					// console.log(Object.values(this.shopCart));
+					Object.values(this.shopCart).forEach((goods,index)=>{
+						num += goods.num;
+					});
+					return num;
 				}else{
 					return 0;
 				}

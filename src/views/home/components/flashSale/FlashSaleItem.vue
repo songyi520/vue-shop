@@ -32,12 +32,20 @@
 </template>
 
 <script>
+	import PubSub from 'pubsub-js'
 	import FlashSaleItem from './FlashSaleItem'
+	//4 引入通知插件
+	import {Toast} from 'vant';
 	export default{
 		name:"FlashSaleItem",
 		props:{
 			product:Object,
-		}
+		},
+		methods:{
+			addToCart(goods){
+				PubSub.publish('homeAddToCart',goods);
+			}
+		},
 	}
 </script>
 

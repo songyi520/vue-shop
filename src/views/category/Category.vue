@@ -63,9 +63,24 @@
         created() {
             this.initData();
         },
-        mounted(){
-
-        },
+       mounted(){
+       	//订阅消息（添加到购物车的消息）
+       	PubSub.subscribe('categoryAddToCart',(msg,goods)=>{
+       		if(msg === 'categoryAddToCart'){
+       			this.ADD_GOODS({
+       				goodsId:goods.id,
+       				goodsName:goods.name,
+       				smallImage:goods.small_image,
+       				goodsPrice:goods.price,
+       			});
+       			//提示用户
+       			Toast({
+       				message:'添加到购物车成功！',
+       				duration:800
+       			});
+       		}
+       	});
+       },
         components: {
             Header,
             ContentView
