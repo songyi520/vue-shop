@@ -25,9 +25,9 @@
                            <div class="bottomContent">
                                <p class="shopPrice">{{goods.price | moneyFormat}}</p>
                                <div class="shopDeal">
-                                   <span>-</span>
-                                   <input disabled type="number" value="1">
-                                   <span>+</span>
+                                   <span @click="removeOutCart(goods.id,goods.num)">-</span>
+                                   <input disabled type="number" :value="goods.num">
+                                   <span @click="">+</span>
                                </div>
                            </div>
                        </div>
@@ -53,11 +53,32 @@
 
 <script>
     import {mapState, mapMutations} from 'vuex';
-
+	import { Dialog } from 'vant';
+	
     export default {
         name: "Cart",
 		computed:{
 			...mapState(["shopCart"]), 
+		},
+		methods:{
+			...mapMutations(["REDUCE_CART"]),
+			//1 移出购物车
+			removeOutCart(goodsId,goodsNum){
+				if(goods.num > 1){
+					 this.REDUCE_CART({goodsId});
+				}else if(goodsNum === 1){//挽留
+					Dialog.confirm({
+					  title: '小笨温馨提示',
+					  message: '你确定删除该商品吗？',
+					})
+					  .then(() => {
+						this.REDUCE_CART({goodsId});
+					  })
+					  .catch(() => {//点击了取消
+					    // do nothing
+					  });
+				}
+			}
 		},
     }
 </script>
