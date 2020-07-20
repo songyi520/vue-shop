@@ -2,6 +2,7 @@ import {
 	ADD_GOODS,
 	INIT_SHOP_CART,
 	REDUCE_CART,
+	SELECTED_SINGER_GOODS,
 } from './mutations-type'
 
 import {getStore,setStore} from './../config/global'
@@ -54,6 +55,22 @@ export default {
 	            goods = null;
 	        }
 	        // 3.2 同时数据
+	        state.shopCart = {...shopCart};
+	        setStore('shopCart', state.shopCart);
+	    }
+	},
+	// 4. 单个商品选中和取消选中
+	[SELECTED_SINGER_GOODS](state, {goodsId}){
+	    let shopCart = state.shopCart;
+	    let goods = shopCart[goodsId];
+	    if(goods){
+	        if(goods.checked){ // 存在该属性
+	            goods.checked = !goods.checked;
+	        } else {
+	            Vue.set(goods, 'checked', true);
+	            // goods.checked = true;
+	        }
+	        // 4.1 同时数据
 	        state.shopCart = {...shopCart};
 	        setStore('shopCart', state.shopCart);
 	    }

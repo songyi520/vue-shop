@@ -15,6 +15,7 @@
 						   href="javascript:;" 
 						   class="cartCheckBox" 
 						   :checked="goods.checked"
+						   @click.stop="singerGoodsSelected(goods.id)"
 						   ></a>
                        </div>
                        <div class="center">
@@ -27,7 +28,7 @@
                                <div class="shopDeal">
                                    <span @click="removeOutCart(goods.id,goods.num)">-</span>
                                    <input disabled type="number" :value="goods.num">
-                                   <span @click="">+</span>
+                                   <span @click="addToCart(goods.id,goods.name,goods.small_image,goods.price)">+</span>
                                </div>
                            </div>
                        </div>
@@ -61,10 +62,10 @@
 			...mapState(["shopCart"]), 
 		},
 		methods:{
-			...mapMutations(["REDUCE_CART"]),
+			...mapMutations(["REDUCE_CART","ADD_GOODS",'SELECTED_SINGER_GOODS']),
 			//1 移出购物车
 			removeOutCart(goodsId,goodsNum){
-				if(goods.num > 1){
+				if(goodsNum > 1){
 					 this.REDUCE_CART({goodsId});
 				}else if(goodsNum === 1){//挽留
 					Dialog.confirm({
@@ -78,7 +79,21 @@
 					    // do nothing
 					  });
 				}
-			}
+			},
+			//2 增加商品
+			addToCart(goodsId, goodsName, smallImage, goodsPrice){
+				this.ADD_GOODS({
+					goodsId,
+					goodsName,
+					smallImage,
+					goodsPrice,
+				})
+			},
+			//3 单个商品选中和取消选中
+			singerGoodsSelected(goodsId){
+				// alert(goodsId);
+				this.SELECTED_SINGER_GOODS({goodsId});
+			},
 		},
     }
 </script>
