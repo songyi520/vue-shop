@@ -3,6 +3,7 @@ import {
 	INIT_SHOP_CART,
 	REDUCE_CART,
 	SELECTED_SINGER_GOODS,
+	SELECTED_ALL_GOODS,
 } from './mutations-type'
 
 import {getStore,setStore} from './../config/global'
@@ -75,5 +76,18 @@ export default {
 	        setStore('shopCart', state.shopCart);
 	    }
 	},
+	//5 所有商品的全选和取消全选
+	[SELECTED_ALL_GOODS](state,{isSelected}){
+		let shopCart = state.shopCart;
+		Object.values(shopCart).forEach((goods,index)=>{
+			if(goods.checked){
+				//存在该属性
+				goods.checked = !isSelected;
+			}else{
+				Vue.set(goods,'checked',!isSelected);
+			}
+		});
+	},
+	
 }
  

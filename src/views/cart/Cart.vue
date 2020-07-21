@@ -38,14 +38,17 @@
            <!--底部通栏-->
            <div class="tabBar">
                <div class="tabBarLeft">
-                   <a href="javascript:;" class="cartCheckBox"></a>
+                   <a href="javascript:;" class="cartCheckBox"
+						:checked = "isSelectedAll"
+						@click.stop = "selectedAll(isSelectedAll)"
+				   ></a>
                    <span style="font-size: 16px;">全选</span>
                    <div class="selectAll">
-                       合计：<span class="totalPrice">199.00</span>
+                       合计：<span class="totalPrice">{{totalPrice | moneyFormat}}</span>
                    </div>
                </div>
                <div class="tabBarRight">
-                   <a href="#" class="pay">去结算(3)</a>
+                   <a href="#" class="pay">去结算({{goodsCount}})</a>
                </div>
            </div>
        </div>
@@ -60,9 +63,39 @@
         name: "Cart",
 		computed:{
 			...mapState(["shopCart"]), 
+			//0 选择商品总件数
+			goodsCount(){
+			    let selectedGoodsCount = 0;
+			    Object.values(this.shopCart).forEach((goods, index)=>{
+			        if(goods.checked){
+			            selectedGoodsCount += 1;
+			        }
+			    });
+			    return selectedGoodsCount;
+			},
+			
+			//1商品是否全选
+			isSelectedAll(){
+				let goodsCount = Object.values(this.shopCart).length;
+				let tag = goodsCount > 0;
+				Object.values(this.shopCart).forEach((goods,index)=>{
+					if(!goods.checked){
+						tag = false;
+					}
+				});
+				return tag;
+			},
+			//2计算商品总计
+			totalPrice(){
+				let totalPrice = 0;
+				Object.values(this.shopCart).forEach((goods,index)=>{
+					totalPrice += goods.price * goods.num;
+				});
+				return totalPrice;
+			}
 		},
 		methods:{
-			...mapMutations(["REDUCE_CART","ADD_GOODS",'SELECTED_SINGER_GOODS']),
+			...mapMutations(["REDUCE_CART","ADD_GOODS",'SELECTED_SINGER_GOODS','SELECTED_ALL_GOODS']),
 			//1 移出购物车
 			removeOutCart(goodsId,goodsNum){
 				if(goodsNum > 1){
@@ -94,6 +127,10 @@
 				// alert(goodsId);
 				this.SELECTED_SINGER_GOODS({goodsId});
 			},
+			//4 全选和取消全选
+			selectedAll(isSelected){
+				this.SELECTED_ALL_GOODS({isSelected});
+			}
 		},
     }
 </script>
