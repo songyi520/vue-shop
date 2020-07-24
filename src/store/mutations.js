@@ -4,6 +4,7 @@ import {
 	REDUCE_CART,
 	SELECTED_SINGER_GOODS,
 	SELECTED_ALL_GOODS,
+	CLEAR_CART
 } from './mutations-type'
 
 import {getStore,setStore} from './../config/global'
@@ -88,6 +89,13 @@ export default {
 			}
 		});
 	},
+	
+	//6 清空购物车
+	[CLEAR_CART](state){
+		state.shopCart = null;
+		state.shopCart = {...state.shopCart};
+		setStore('shopCart', state.shopCart);
+	}
 	
 }
  

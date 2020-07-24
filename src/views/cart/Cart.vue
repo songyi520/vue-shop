@@ -3,7 +3,7 @@
        <!--头部区域-->
        <header class="titleWrapper">
            <h4><strong>购物车</strong></h4>
-		   <button class="clearCart">清空购物车</button>
+		   <button class="clearCart" @click="clearCart">清空购物车</button>
        </header>
        <div class="contentWrapper">
            <!--中间内容-->
@@ -48,7 +48,7 @@
                    </div>
                </div>
                <div class="tabBarRight">
-                   <a href="#" class="pay">去结算({{goodsCount}})</a>
+				   <router-link tag="a" class="pay" :to="{path:'/confirmOrder'}">去结算({{goodsCount}})</router-link>
                </div>
            </div>
        </div>
@@ -95,7 +95,7 @@
 			}
 		},
 		methods:{
-			...mapMutations(["REDUCE_CART","ADD_GOODS",'SELECTED_SINGER_GOODS','SELECTED_ALL_GOODS']),
+			...mapMutations(["REDUCE_CART","ADD_GOODS",'SELECTED_SINGER_GOODS','SELECTED_ALL_GOODS','CLEAR_CART']),
 			//1 移出购物车
 			removeOutCart(goodsId,goodsNum){
 				if(goodsNum > 1){
@@ -130,6 +130,19 @@
 			//4 全选和取消全选
 			selectedAll(isSelected){
 				this.SELECTED_ALL_GOODS({isSelected});
+			},
+			//清空购物车
+			clearCart(){
+				Dialog.confirm({
+				  title: '小笨温馨提示',
+				  message: '你确定清空所有商品吗？',
+				})
+				  .then(() => {
+					this.CLEAR_CART();
+				  })
+				  .catch(() => {//点击了取消
+				    // do nothing
+				  });
 			}
 		},
     }
