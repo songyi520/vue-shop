@@ -1,5 +1,5 @@
 <template>
-	<div id="mine">
+	<div id="mine" v-if="userInfo">
 		<van-nav-bar
 			title="我的"
 			:fixed = true
@@ -7,31 +7,71 @@
 		>
 		</van-nav-bar>
 		
-		<van-cell-group style="margin-top: 2.6rem;">
-			<van-cell title="我的订单" value="查看所有订单" label="" is-link /> 
-		<van-cell 
-			style="background-color:#2eba5a;color:#fff;"
-			 is-link
-			 :center=true
-			 >
-		  <!-- 使用 title 插槽来自定义标题 -->
-		  <template #title>
-			<div class="persoMsg">
-				<img src="./images/user.jpg" alt="">
-				<div class="personInfo">
-					<span>小笨1号</span>
-					<span>微信号：225114413xdd</span>
+		<van-cell-group style="margin-top: 2.2rem;">
+			<van-cell 
+				style="background-color:#2eba5a;color:#fff;"
+				is-link
+				:center=true
+				>
+			  <template #title>
+				<div class="persoMsg">
+					<img src="./images/user.jpg" alt="">
+					<div class="personInfo">
+						<span>小笨1号</span>
+						<span>微信号：225114413xdd</span>
+					</div>
 				</div>
-			</div>
-		  </template>
-		</van-cell>
+			  </template>
+			</van-cell>
+		</van-cell-group>
+		
+		<van-cell-group>
+			<van-cell icon="label" title="我的订单" value="查看所有订单" label="" is-link />
+			<van-grid :column-num="4">
+			  <van-grid-item 
+				v-for="(order,index) in orderData" 
+				:key="index" 
+				:icon="order.icon" 
+				:text="order.title" />
+			</van-grid>
+		</van-cell-group>
+		
+		<van-cell-group style="margin-top: 0.2rem;">
+			<van-cell icon="gold-coin" title="我的优惠券" value="1张" label="" is-link />
+			<van-cell icon="map-marked" title="我的收货地址" value="" label="" is-link />
+		</van-cell-group>
+		<van-cell-group style="margin-top: 0.2rem;">
+			<van-cell icon="phone" title="联系客服" value="客服时间 07:00-22:00" label="" is-link />
+			<van-cell icon="comment-circle" title="意见反馈" value="" label="" is-link />
+		</van-cell-group>
+		<van-cell-group style="margin-top: 0.2rem;">
+			<van-cell icon="gift" title="小笨买菜" value="下载APP体验更佳" label="" is-link />
 		</van-cell-group>
 	</div>
+	<SelectLogin v-else></SelectLogin>
 </template>
 
 <script>
+	import SelectLogin from './../../views/login/SelectLogin';
+	import {mapState} from 'vuex';
 	export default{
 		name:"Mine",
+		data(){
+			return {
+				orderData:[
+					{icon:'cart-circle-o',title:'待支付'},
+					{icon:'gift-o',title:'待收货'},
+					{icon:'smile-comment-o',title:'待评价'},
+					{icon:'cash-back-record',title:'售后/退款'},
+				]
+			}
+		},
+		computed:{
+			...mapState(["userInfo"]), 
+		},
+		components:{
+			SelectLogin,
+		}
 	}
 </script>
 
@@ -63,5 +103,9 @@
 		display: flex;
 		flex-direction: column;
 		margin-left: 0.8rem;
+	}
+	.van-cell__left-icon{
+		color:orange;
+		font-size:1.2rem;
 	}
 </style>

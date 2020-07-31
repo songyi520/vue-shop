@@ -15,6 +15,8 @@ const MyAddress = ()=> import('./../views/order/children/MyAddress.vue');
 const AddAddress = ()=> import('./../views/order/children/children/AddAddress.vue');
 const EditAddress = ()=> import('./../views/order/children/children/EditAddress.vue');
 
+//引入登录
+const Login = ()=> import('./../views/login/Login.vue');
 
 Vue.use(Router);
 
@@ -50,7 +52,8 @@ export default new Router({
 			    },
 			  
 			]
-		}
+		},
+		{path:'/login',name:'login',component:Login},
 	]
 });
 
