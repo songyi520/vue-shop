@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default function ajxa(url='',parmas={}, type='GET'){
+export default function ajxa(url='',params={}, type='GET'){
 	//1 变量
 	let promise;
 	
@@ -11,7 +11,7 @@ export default function ajxa(url='',parmas={}, type='GET'){
 			//2.2 拼接字符串
 			let paramsStr = '';
 			//2.3 遍历
-			Object.keys(parmas).forEach(key=>{
+			Object.keys(params).forEach(key=>{
 				paramsStr += key + '=' +params[key] + '&';
 			});
 			//2.4 过滤最快
@@ -24,7 +24,7 @@ export default function ajxa(url='',parmas={}, type='GET'){
 			promise = axios.get(url);
 		}else if(type.toUpperCase() === 'POST'){
 			//2.7 发起post请求
-			promise = axios.post(url,parmas);
+			promise = axios.post(url,params);
 		}
 		//2.8 处理结果并返回
 		promise.then((response)=>{

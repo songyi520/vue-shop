@@ -12,13 +12,14 @@
 				style="background-color:#2eba5a;color:#fff;"
 				is-link
 				:center=true
+				@click="$router.push('/dashboard/mine/userCenter')"
 				>
 			  <template #title>
 				<div class="persoMsg">
-					<img src="./images/user.jpg" alt="">
+					<img :src="userInfo.icon_url" alt="">
 					<div class="personInfo">
-						<span>小笨1号</span>
-						<span>微信号：225114413xdd</span>
+						<span>{{userInfo.real_name}}</span>
+						<span>手机号：{{userInfo.phone}}</span>
 					</div>
 				</div>
 			  </template>
@@ -47,7 +48,11 @@
 		<van-cell-group style="margin-top: 0.2rem;">
 			<van-cell icon="gift" title="小笨买菜" value="下载APP体验更佳" label="" is-link />
 		</van-cell-group>
-	</div>
+		<!-- 路由出口 -->
+		<transition model="out-in" name="router-slider">
+			<router-view></router-view>
+		</transition>
+	</div>	
 	<SelectLogin v-else></SelectLogin>
 </template>
 
@@ -107,5 +112,13 @@
 	.van-cell__left-icon{
 		color:orange;
 		font-size:1.2rem;
+	}
+	/* 转场动画 */
+	.router-slider-enter-active,.router-slider-leave-active{
+		transition: all 0.3s;
+	}
+	.router-slider-enter,.router-slider-leave-active{
+		transform: translate3d(2rem,0,0);
+		opacity:0;
 	}
 </style>

@@ -17,6 +17,8 @@ const EditAddress = ()=> import('./../views/order/children/children/EditAddress.
 
 //引入登录
 const Login = ()=> import('./../views/login/Login.vue');
+//引入退出登录
+const UserCenter = ()=> import('./../views/mine/children/UserCenter');
 
 Vue.use(Router);
 
@@ -32,7 +34,14 @@ export default new Router({
 				{path:'home',name:'home',component:Home,meta:{keepAlive:true}},
 				{path:'category',name:'category',component:Category,meta:{keepAlive:true}},
 				{path:'cart',name:'cart',component:Cart},
-				{path:'mine',name:'mine',component:Mine},
+				{
+					path:'mine',
+					name:'mine',
+					component:Mine,
+					children:[
+						{path:'userCenter',component:UserCenter},//用户中心
+					] 
+				},
 			]
 		},
 		{
