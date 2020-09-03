@@ -58,9 +58,9 @@
 
 <script>
     import {mapState, mapMutations} from 'vuex';
-	import { Dialog } from 'vant';
+	import { Dialog ,Toast} from 'vant';
 	import SelectLogin from './../../views/login/SelectLogin';
-	
+	import {changeCartNum,clearAllCart} from './../../service/api/index';
     export default {
         name: "Cart",
 		computed:{
@@ -99,30 +99,61 @@
 		methods:{
 			...mapMutations(["REDUCE_CART","ADD_GOODS",'SELECTED_SINGER_GOODS','SELECTED_ALL_GOODS','CLEAR_CART']),
 			//1 移出购物车
-			removeOutCart(goodsId,goodsNum){
+			async removeOutCart(goodsId,goodsNum){
 				if(goodsNum > 1){
-					 this.REDUCE_CART({goodsId});
+					let result = await changeCartNum(this.userInfo.token,goodsId,'reduce');
+					//console.log(result);
+					if(result.success_code === 200){
+						//修改成功
+						this.REDUCE_CART({goodsId});
+					}else{
+						//修改失败
+						Toast({
+							message:'出了点小问题哟~',
+							duration:800,
+						});
+					}
+					this.REDUCE_CART({goodsId});
 				}else if(goodsNum === 1){//挽留
 					Dialog.confirm({
 					  title: '小笨温馨提示',
 					  message: '你确定删除该商品吗？',
-					})
-					  .then(() => {
-						this.REDUCE_CART({goodsId});
-					  })
-					  .catch(() => {//点击了取消
+					}).then(async() => {
+						let result = await changeCartNum(this.userInfo.token,goodsId,'reduce');
+						//console.log(result);
+						if(result.success_code === 200){
+							//修改成功
+							this.REDUCE_CART({goodsId});
+						}else{
+							//修改失败
+							Toast({
+								message:'出了点小问题哟~',
+								duration:800,
+							});
+						}
+					  }).catch(() => {//点击了取消
 					    // do nothing
 					  });
 				}
 			},
 			//2 增加商品
-			addToCart(goodsId, goodsName, smallImage, goodsPrice){
-				this.ADD_GOODS({
-					goodsId,
-					goodsName,
-					smallImage,
-					goodsPrice,
-				})
+			async addToCart(goodsId, goodsName, smallImage, goodsPrice){
+				let result = await changeCartNum(this.userInfo.token,goodsId,'add');
+				//console.log(result);
+				if(result.success_code === 200){//修改成功
+					this.ADD_GOODS({
+						goodsId,
+						goodsName,
+						smallImage,
+						goodsPrice,
+					});
+				}else{
+					//修改失败
+					Toast({
+						message:'出了点小问题哟~',
+						duration:800,
+					});
+				}
 			},
 			//3 单个商品选中和取消选中
 			singerGoodsSelected(goodsId){
@@ -138,11 +169,20 @@
 				Dialog.confirm({
 				  title: '小笨温馨提示',
 				  message: '你确定清空所有商品吗？',
-				})
-				  .then(() => {
-					this.CLEAR_CART();
-				  })
-				  .catch(() => {//点击了取消
+				}).then(async() => {
+					let result = await clearAllCart(this.userInfo.token);
+					//console.log(result);
+					if(result.success_code === 200){
+						//删除成功
+						this.CLEAR_CART();
+					}else{
+						//修改失败
+						Toast({
+							message:'出了点小问题哟~',
+							duration:800,
+						});
+					}
+				  }).catch(() => {//点击了取消
 				    // do nothing
 				  });
 			}
